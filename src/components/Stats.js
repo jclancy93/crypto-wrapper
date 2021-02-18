@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useWeb3React } from '@web3-react/core'
 import { getDefaultProvider } from "@ethersproject/providers";
-import { addresses, abis } from "@project/contracts";
 import { useNxm } from "../hooks/useNxm";
 import { useWnxm } from "../hooks/useWnxm";
 

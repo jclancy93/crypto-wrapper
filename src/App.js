@@ -5,7 +5,6 @@ import { Web3Provider } from "@ethersproject/providers"
 import { Body, Button, Image, Link, Stats, Tabs, Input, Steps, Web3Modal } from "./components"
 import spinner from "./static/spinner.svg"
 import arrowRight from "./static/arrow-right.svg"
-import useNxmBalances from "./hooks/useNxmBalances"
 import { useNxm } from "./hooks/useNxm"
 import { useWnxm } from "./hooks/useWnxm"
 
