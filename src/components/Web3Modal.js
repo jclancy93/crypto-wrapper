@@ -4,6 +4,7 @@ import { Button } from "./Button";
 import { Image } from "./index";
 import { injected } from "../connectors"
 import metamask from "../static/metamask.png"
+import walletConnect from "../static/walletConnect.svg"
 
 /**
  * Hook that alerts clicks outside of the passed ref
@@ -75,7 +76,7 @@ export const Web3Modal = ({ setOpen }) => {
               className="w-full text-left py-3"
             >
               Metamask
-              <Image src={metamask} height="32" width="32" className="ml-auto mx-2" />
+              <Image src={metamask} className="ml-auto mx-2 h-8 w-8" />
             </Button>
           </div>
           <div className="mt-5 sm:mt-6">
@@ -89,7 +90,7 @@ export const Web3Modal = ({ setOpen }) => {
               className="w-full text-left py-3"
             >
               WalletConnect
-              <Image src={metamask} height="32" width="32" className="ml-auto mx-2" />
+              <Image src={walletConnect} className="ml-auto mx-2 h-8 w-8" />
             </Button>
           </div>
         </div>

@@ -37,8 +37,10 @@ export const Header = () => {
         <div className="flex justify-between h-16">
           <div className="flex">
             <div className="flex-shrink-0 flex items-center">
-              <span className="block lg:hidden h-8 w-auto text-lg">🎁</span>
-              <span className="hidden lg:block h-8 w-auto text-2xl text-white">🎁 Wrapper</span>
+              <span className="block lg:hidden h-8 w-auto text-2xl">🎁</span>
+              <span className="hidden lg:block h-8 w-auto text-2xl text-white">
+                🎁  <span className="ml-2">Wrapper</span>
+              </span>
             </div>
           </div>
           <div className="flex items-center">

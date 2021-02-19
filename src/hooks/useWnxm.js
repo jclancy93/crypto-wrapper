@@ -13,7 +13,12 @@ export const useWnxm = () => {
   const { account, chainId } = useActiveWeb3React()
   const wNxmContract = useWnxmContract()
 
-  const [allowance, setAllowance] = useState(BigNumber.from(0))
+  // Using -1 as an initial loading state for allowance
+  const [allowance, setAllowance] = useState({
+    rawAllowance: BigNumber.from(-1),
+    parsedAllowance: -1,
+  })
+  const [allowanceLoading, setAllowanceLoading] = useState(false)
   const [balance, setBalance] = useState({ 
     rawBalance: 0,
     parsedBalance: 0.0,
@@ -29,6 +34,7 @@ export const useWnxm = () => {
           parsedBalance: ethers.utils.formatUnits(balance),
           displayBalance: (+ethers.utils.formatUnits(balance)).toFixed(6),
         })
+        
       } catch (err) {
         console.log(err, 'err fetching wnxm balance')
        setBalance({
@@ -40,10 +46,37 @@ export const useWnxm = () => {
     }
   })
 
+  const fetchAllowance = useCallback(async () => {
+    if (account) {
+      try {
+        const allowance = await wNxmContract?.allowance(
+          account,
+          NETWORK_WNXM_CONTRACT_ADDRESS[chainId]
+        )
+        setAllowance({
+          rawAllowance: allowance,
+          parsedAllowance: ethers.utils.formatUnits(allowance),
+        })
+      } catch(err) {
+        setAllowance({
+          rawAllowance: BigNumber.from(0),
+          parsedAllowance: 0,
+        })
+      }
+    }
+  })
+
   useEffect(() => {
     if (account && wNxmContract) {
-      // fetchAllowance()
+      fetchAllowance()
       fetchBalance()
+    }
+    const balanceRefreshInterval = setInterval(fetchBalance, 10000)
+    const allowanceRefreshLoading = setInterval(fetchAllowance, 10000)
+
+    return () => {
+      clearInterval(balanceRefreshInterval)
+      clearInterval(allowanceRefreshLoading)
     }
   }, [account, wNxmContract])
 
@@ -60,9 +93,18 @@ export const useWnxm = () => {
   })
 
   const wrap = useCallback(async (amount) => {
-    console.log('calling')
     try {
       const tx = await wNxmContract.wrap(amount)
+      return tx
+    } catch (err) {
+      console.log('wrap fails', err)
+      return err
+    }
+  })
+
+  const unwrap = useCallback(async (amount) => {
+    try {
+      const tx = await wNxmContract.unwrap(amount)
       console.log(tx, 'here is tx')
       return tx
     } catch (err) {
@@ -71,5 +113,5 @@ export const useWnxm = () => {
     }
   })
 
-  return { allowance, balance, approve, wrap }
+  return { allowance, balance, approve, wrap, unwrap }
 }

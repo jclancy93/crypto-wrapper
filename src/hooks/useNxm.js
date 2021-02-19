@@ -13,7 +13,10 @@ export const useNxm = () => {
   const { account, chainId } = useActiveWeb3React()
   const nxmContract = useNxmContract()
 
-  const [allowance, setAllowance] = useState(BigNumber.from(0))
+  const [allowance, setAllowance] = useState({
+    rawAllowance: BigNumber.from(-1),
+    parsedAllowance: -1,
+  })
   const [balance, setBalance] = useState({ 
     rawBalance: 0,
     parsedBalance: 0.0,
@@ -28,9 +31,15 @@ export const useNxm = () => {
           account,
           NETWORK_WNXM_CONTRACT_ADDRESS[chainId]
         )
-        setAllowance(BigNumber.from(allowance))
+        setAllowance({
+          rawAllowance: allowance,
+          parsedAllowance: ethers.utils.formatEther(allowance),
+        })
       } catch(err) {
-        setAllowance(BigNumber.from(0))
+        setAllowance({
+          rawAllowance: BigNumber.from(0),
+          parsedAllowance: 0,
+        })
       }
     }
   }, [account, nxmContract])
@@ -39,6 +48,7 @@ export const useNxm = () => {
     if (account) {
       try {
         const whitelisted = await nxmContract.whiteListed(account)
+        console.log(whitelisted, 'here is whitelisted')
         setWhitelisted(whitelisted)
       } catch(err) {
         setWhitelisted(false)
@@ -71,9 +81,14 @@ export const useNxm = () => {
       fetchWhitelisted()
       fetchBalance()
     }
-    const refreshInterval = setInterval(fetchAllowance, 10000)
-    return () => clearInterval(refreshInterval)
-  }, [account, nxmContract, fetchAllowance])
+    const balanceRefreshInterval = setInterval(fetchBalance, 10000)
+    const allowanceRefreshLoading = setInterval(fetchAllowance, 10000)
+
+    return () => {
+      clearInterval(balanceRefreshInterval)
+      clearInterval(allowanceRefreshLoading)
+    }
+  }, [account, nxmContract])
 
   const approve = useCallback(async () => {
     try {
