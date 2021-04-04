@@ -26,9 +26,24 @@ export const Tabs = ({ selectedTab, setSelectedTab }) => {
     <div>
       <div className="sm:hidden">
         <label htmlFor="tabs" className="sr-only">Select a tab</label>
-        <select id="tabs" name="tabs" className="block w-full bg-gray-800 focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 text-white">
-          <option selected={selectedTab === "wrap"} onClick={() => setSelectedTab("wrap")}>Wrap</option>
-          <option selected={selectedTab === "unwrap"} onClick={() => setSelectedTab("unwrap")}>Unwrap</option>
+        <select 
+          id="tabs" 
+          name="tabs" 
+          className="block w-11/12 mx-auto bg-gray-800 focus:ring-indigo-500 focus:border-indigo-500 border border-gray-300 py-3 px-4 mt-4 mb-2 rounded-md text-white"
+          onChange={(e) => setSelectedTab(e.target.value.toLowerCase())}
+        >
+          <option 
+            selected={selectedTab === "wrap"} 
+            className="py-2"
+          >
+            Wrap
+          </option>
+          <option 
+            selected={selectedTab === "unwrap"}
+            className="py-2"
+          >
+            Unwrap
+          </option>
         </select>
       </div>
       <div className="hidden sm:block mb-6 w-full">
