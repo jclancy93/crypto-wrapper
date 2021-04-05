@@ -23,3 +23,15 @@ export const Link = styled.a.attrs({
   color: #61dafb;
   margin-top: 10px;
 `;
+
+export const DarkLink = styled.a.attrs({
+  target: "_blank",
+  rel: "noopener noreferrer",
+})`
+  color: rgb(129 137 149);
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: underline !important;
+  }
+`;
