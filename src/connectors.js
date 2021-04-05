@@ -9,15 +9,11 @@ const RPC_URLS= {
   42: process.env.REACT_APP_RPC_URL_42,
 }
 
-console.log(process.env, RPC_URLS, 'HERE ARE RPC URLS')
 export const injected = new InjectedConnector({ supportedChainIds: [1, 3, 4, 5, 42] })
 
+const rpc = process.env.REACT_APP_DEFAULT_CHAIN == 1 ? { 1: RPC_URLS[1] } : { 42: RPC_URLS[42] }
 export const walletconnect = new WalletConnectConnector({
-  rpc: process.env.REACT_APP_DEFAULT_CHAIN === 1 ? { 
-    1: RPC_URLS[1],
-  } : {
-    42: RPC_URLS[42],
-  },
+  rpc,
   bridge: 'https://bridge.walletconnect.org',
   qrcode: true,
   pollingInterval: POLLING_INTERVAL
