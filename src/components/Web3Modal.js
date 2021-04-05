@@ -2,7 +2,7 @@ import React, { useRef, useEffect } from "react";
 import { useWeb3React } from '@web3-react/core'
 import { Button } from "./Button";
 import { Image } from "./index";
-import { injected } from "../connectors"
+import { injected, walletconnect } from "../connectors"
 import metamask from "../static/metamask.png"
 import walletConnect from "../static/walletConnect.svg"
 
@@ -84,7 +84,7 @@ export const Web3Modal = ({ setOpen }) => {
               variant="secondary"
               size="md" 
               onClick={() => {
-                activate(injected)
+                activate(walletconnect)
                 setOpen(false)
               }}
               className="w-full text-left py-3"

@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { ethers } from 'ethers'
 import { useWeb3React } from '@web3-react/core'
-import { Button, Image } from "../components"
+import { Button, Image, Link } from "../components"
 import { useNxm } from "../hooks/useNxm"
 import { useWnxm } from "../hooks/useWnxm"
 import spinner from "../static/spinner.svg"
@@ -144,18 +144,23 @@ export const ButtonStates = ({ amount, selectedTab, currentStep, setCurrentStep,
 
   // UNWRAP TAB
   } else {
-    console.log('ty u no work')
-
     if (!isWhitelisted) {
       return (
-        <Button 
-          disabled
-          variant="primary"
-          type="submit"
-          size="lg"
-          className="w-11/12 block flex justify-center align-center py-3 mx-auto rounded-md shadow-sm text-2xl text-bold">
-          KYC Needed to Unwrap
-        </Button>
+        <>
+          <Button 
+            disabled
+            variant="primary"
+            type="submit"
+            size="lg"
+            className="w-11/12 block flex justify-center align-center py-3 mx-auto rounded-md shadow-sm text-2xl text-bold">
+            KYC Needed to Unwrap
+          </Button>
+          <span className="text-l my-5 text-gray-200">
+            Please visit the {' '}
+            <Link href="https://app.nexusmutual.io/membership">Nexus Mutual site</Link>
+            {' '}to complete KYC
+          </span>
+        </>
       )
     } 
 

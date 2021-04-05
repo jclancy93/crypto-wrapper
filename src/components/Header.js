@@ -39,7 +39,7 @@ export const Header = () => {
             <div className="flex-shrink-0 flex items-center">
               <span className="block lg:hidden h-8 w-auto text-2xl">🎁</span>
               <span className="hidden lg:block h-8 w-auto text-2xl text-white">
-                🎁  <span className="ml-2">Wrapper</span>
+                🎁  <span className="ml-2">Nexus Wrapper</span>
               </span>
             </div>
           </div>

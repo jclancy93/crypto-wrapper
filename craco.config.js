@@ -7,4 +7,9 @@ module.exports = {
       ],
     },
   },
+  // webpack: {
+  //   alias: {
+  //     environment: path.join(__dirname, ')
+  //   }
+  // },
 }
