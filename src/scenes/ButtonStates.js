@@ -98,7 +98,7 @@ export const ButtonStates = ({ amount, selectedTab, currentStep, setCurrentStep,
                 setLoadingApproval(false)
               }
             }}
-            disabled={currentStep === 0}
+            disabled={currentStep === 0 || +nxmAllowance.parsedAllowance === 0}
           >
             {isLoadingWrap ? <Image src={spinner} width="20" height="20" /> : 'Wrap'}
           </Button>
@@ -164,57 +164,8 @@ export const ButtonStates = ({ amount, selectedTab, currentStep, setCurrentStep,
       )
     } 
 
-    // Approve/unwrap
-    if (+amount > 0 && +amount <= +wNxmBalance.parsedBalance && +wNxmAllowance.parsedAllowance === 0) {
-      return (
-        <>
-          <Button 
-            variant="primary" 
-            type="submit"
-            size="lg"
-            className="w-5/12 block flex justify-center align-center py-3 mx-auto rounded-md shadow-sm text-2xl text-bold" 
-            onClick={async () => {
-              setLoadingApproval(true)
-              try {
-                const approval = await approveWnxm()
-                await approval.wait(1)
-                setCurrentStep(1)
-                setLoadingApproval(false)
-              } catch (err) {
-                setLoadingApproval(false)
-              }
-            }}
-            disabled={currentStep === 1 || isLoadingApproval === true}
-          >
-            {isLoadingApproval ? <Image src={spinner} width="20" height="20" /> : 'Approve'}
-          </Button>
-
-          <Button 
-            variant="primary" 
-            type="submit"
-            size="lg"
-            className="w-5/12 block flex justify-center align-center py-3 mx-auto rounded-md shadow-sm text-2xl text-bold" 
-            onClick={async () => {
-              try {
-                const tx = await unwrap(
-                  ethers.utils.parseEther(amount.toString())
-                )
-                setCurrentStep(2)
-                setLoadingApproval(false)
-              } catch (err) {
-                setLoadingApproval(false)
-              }
-            }}
-            disabled={currentStep === 0}
-          >
-            {isLoadingWrap ? <Image src={spinner} width="20" height="20" /> : 'Unwrap'}
-          </Button>
-        </>
-      )
-    }
-
     // unwrap
-    if (+amount > 0 && amount <= +wNxmBalance.parsedBalance && +wNxmAllowance.parsedAllowance >= +amount) {
+    if (+amount > 0 && amount <= +wNxmBalance.parsedBalance) {
       return (
         <Button 
           variant="primary" 

@@ -105,7 +105,6 @@ export const useWnxm = () => {
   const unwrap = useCallback(async (amount) => {
     try {
       const tx = await wNxmContract.unwrap(amount)
-      console.log(tx, 'here is tx')
       return tx
     } catch (err) {
       console.log('wrap fails', err)

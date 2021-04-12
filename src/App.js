@@ -100,12 +100,7 @@ const App = () => {
                   {(active && (nxmAllowance.parsedAllowance == 0 || +nxmAllowance.parsedAllowance <= +amount) && +nxmAllowance.parsedAllowance !== -1 && +amount > 0 && +amount <= +nxmBalance.parsedBalance) 
                     && <Steps names={['Approve', 'Wrap']} currentIndex={currentStep} />}
                 </>
-              ) : (
-               <>
-                  {(active && (wNxmAllowance.parsedAllowance == 0 || +wNxmAllowance.parsedAllowance <= +amount) && +wNxmAllowance.parsedAllowance !== -1 && +amount > 0 && +amount <= +nxmBalance.parsedBalance) 
-                    && <Steps names={['Approve', 'Unwrap']} currentIndex={currentStep} />}
-                </>
-              )}
+              ) : null }
             </div>
           </div>
         </div>
