@@ -68,8 +68,8 @@ export const ButtonStates = ({
   if (selectedTab === "wrap") {
     // Approve -> Wrap
     if (
-      amount > 0 &&
-      amount <= nxmBalance.parsedBalance &&
+      +amount > 0 &&
+      +amount <= +nxmBalance.parsedBalance &&
       +nxmAllowance.parsedAllowance === 0
     ) {
       return (
