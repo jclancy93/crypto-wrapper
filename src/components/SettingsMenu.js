@@ -2,7 +2,10 @@
 import { Fragment, useState } from "react";
 import { Popover, Transition } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/solid";
+import ReactTooltip from "react-tooltip";
+
 import Switch from "./Switch";
+import { useMaxApproval } from "../context";
 
 const solutions = [
   {
@@ -40,7 +43,10 @@ function classNames(...classes) {
 }
 
 export default function SettingsMenu() {
-  const [enabled, setEnabled] = useState(false);
+  const {
+    state: { maxApproval },
+    dispatch,
+  } = useMaxApproval();
 
   return (
     <Popover className="relative">
@@ -50,7 +56,7 @@ export default function SettingsMenu() {
             <button className="bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                class="h-6 w-6"
+                className="h-6 w-6"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -83,14 +89,50 @@ export default function SettingsMenu() {
           >
             <Popover.Panel
               static
-              className="absolute z-10 -left-full md:left-1/2 transform -translate-x-3/4 mt-10 px-2 w-screen max-w-xs sm:px-0"
+              className="absolute z-10 -left-full transform -translate-x-3/4 mt-10 px-2 w-screen max-w-xs sm:px-0"
             >
               <div className="rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 overflow-hidden">
                 <div className="relative bg-gray-800  grid gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8">
                   <span className="text-white">Transaction Settings</span>
-                  <div className="flex align-center justify-between">
-                    <span className="text-gray-300 text-sm">Max Approvals</span>
-                    <Switch enabled={enabled} setEnabled={setEnabled} />
+                  <div className="flex items-center justify-between">
+                    <div className="d-flex items-center">
+                      <span className="text-gray-300 text-sm">
+                        Max Approval
+                      </span>
+                      <span
+                        className="inline-block ml-1"
+                        data-tip="tooltip"
+                        // data-tip=""
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="14"
+                          height="14"
+                          viewBox="0 0 24 24"
+                          fill="#fff"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        >
+                          <circle cx="12" cy="12" r="10"></circle>
+                          <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                          <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                        </svg>
+                      </span>
+                    </div>
+                    <ReactTooltip className="w-56">
+                      Turning off max approvals will only approve the amount
+                      necessary for each wrap/unwrap transaction
+                    </ReactTooltip>
+                    <Switch
+                      enabled={maxApproval}
+                      setEnabled={
+                        maxApproval
+                          ? () => dispatch({ type: "disable" })
+                          : () => dispatch({ type: "enable" })
+                      }
+                    />
                   </div>
                 </div>
               </div>

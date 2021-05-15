@@ -19,6 +19,7 @@ import nxm from "./static/nxm.svg";
 import wNxm from "./static/wnxm.svg";
 import { useNxm } from "./hooks/useNxm";
 import { useWnxm } from "./hooks/useWnxm";
+import { useMaxApproval } from "./context";
 
 const { BigNumber } = ethers;
 
@@ -59,6 +60,9 @@ const App = () => {
     setAmount(0.0);
     setSelectedTab(tab);
   };
+  const {
+    state: { maxApproval },
+  } = useMaxApproval();
 
   const { allowance: nxmAllowance, balance: nxmBalance } = useNxm();
   const { balance: wNxmBalance } = useWnxm();
