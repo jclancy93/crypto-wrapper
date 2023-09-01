@@ -1,18 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { ethers } from "ethers";
-import { Web3ReactProvider, useWeb3React } from "@web3-react/core";
-import { Web3Provider } from "@ethersproject/providers";
-import {
-  Body,
-  Button,
-  Image,
-  Link,
-  Stats,
-  Tabs,
-  Input,
-  Steps,
-  Web3Modal,
-} from "./components";
+import { useWeb3React } from "@web3-react/core";
+import { Image, Stats, Tabs, Input, Steps, Web3Modal } from "./components";
 import { ButtonStates } from "./scenes/ButtonStates";
 import arrowRight from "./static/arrow-right.svg";
 import nxm from "./static/nxm.svg";
@@ -20,15 +9,7 @@ import wNxm from "./static/wnxm.svg";
 import { useNxm } from "./hooks/useNxm";
 import { useWnxm } from "./hooks/useWnxm";
 import { useMaxApproval } from "./context";
-
-const { BigNumber } = ethers;
-
-const validateForm = async (value, maxBalance, setError) => {
-  if (value > maxBalance) setError("Amount greater than max balance");
-  if (value < 0) setError("Amount less than zero");
-  if (isNaN(value)) setError("Input is not a number");
-  else setError(undefined);
-};
+import { injected, walletconnect } from "./connectors";
 
 const TokenDirection = ({ selectedTab }) => (
   <div className="flex flex-nowrap content-between justify-around items-center mb-14 mt-4 w-72 sm:w-96 mx-auto">
@@ -51,7 +32,7 @@ const TokenDirection = ({ selectedTab }) => (
 );
 
 const App = () => {
-  const { active } = useWeb3React();
+  const { account } = useWeb3React();
   const [selectedTab, setSelectedTab] = useState("wrap");
   const [amount, setAmount] = useState(0);
   const [currentStep] = React.useState(0);
@@ -66,6 +47,17 @@ const App = () => {
 
   const { allowance: nxmAllowance, balance: nxmBalance } = useNxm();
   const { balance: wNxmBalance } = useWnxm();
+
+  // attempt to connect eagerly on mount
+  // attempt to connect eagerly on mount
+  useEffect(() => {
+    walletconnect.connectEagerly().catch((error) => {
+      console.debug("Failed to connect eagerly to walletconnect", error);
+    });
+    injected.connectEagerly().catch((error) => {
+      console.debug("Failed to connect eagerly to walletconnect", error);
+    });
+  }, []);
 
   return (
     <>
@@ -86,7 +78,7 @@ const App = () => {
               <div className="w-full flex flex-wrap justify-center">
                 <Input
                   placeholder="0.0"
-                  disabled={!active}
+                  disabled={!account}
                   type="number"
                   className="w-11/12 block mb-16"
                   name={
@@ -124,7 +116,7 @@ const App = () => {
               </div>
               {selectedTab === "wrap" ? (
                 <>
-                  {active &&
+                  {account &&
                     (nxmAllowance.parsedAllowance == 0 ||
                       +nxmAllowance.parsedAllowance <= +amount) &&
                     +nxmAllowance.parsedAllowance !== -1 &&

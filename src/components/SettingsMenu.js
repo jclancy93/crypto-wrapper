@@ -1,46 +1,10 @@
 /* This example requires Tailwind CSS v2.0+ */
-import { Fragment, useState } from "react";
+import { Fragment } from "react";
 import { Popover, Transition } from "@headlessui/react";
-import { ChevronDownIcon } from "@heroicons/react/solid";
 import ReactTooltip from "react-tooltip";
 
 import Switch from "./Switch";
 import { useMaxApproval } from "../context";
-
-const solutions = [
-  {
-    name: "Blog",
-    description: "Learn about tips, product updates and company culture.",
-    href: "#",
-  },
-  {
-    name: "Help Center",
-    description:
-      "Get all of your questions answered in our forums of contact support.",
-    href: "#",
-  },
-  {
-    name: "Guides",
-    description:
-      "Learn how to maximize our platform to get the most out of it.",
-    href: "#",
-  },
-  {
-    name: "Events",
-    description:
-      "Check out webinars with experts and learn about our annual conference.",
-    href: "#",
-  },
-  {
-    name: "Security",
-    description: "Understand how we take your privacy seriously.",
-    href: "#",
-  },
-];
-
-function classNames(...classes) {
-  return classes.filter(Boolean).join(" ");
-}
 
 export default function SettingsMenu() {
   const {

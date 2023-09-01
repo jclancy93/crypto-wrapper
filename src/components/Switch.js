@@ -1,5 +1,3 @@
-/* This example requires Tailwind CSS v2.0+ */
-import { useState } from "react";
 import { Switch as TSwitch } from "@headlessui/react";
 
 function classNames(...classes) {

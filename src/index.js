@@ -1,19 +1,25 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { Web3Provider } from "@ethersproject/providers";
+import {
+  injectedHooks,
+  injected,
+  walletconnect,
+  walletconnectHooks,
+} from "./connectors";
 import { Web3ReactProvider } from "@web3-react/core";
 import { Header, Footer } from "./components";
 import "./index.css";
 import App from "./App";
-import { AppProvider, useMaxApproval } from "./context";
-
-function getLibrary(provider) {
-  return new Web3Provider(provider); // this will vary according to whether you use e.g. ethers or web3.js
-}
+import { AppProvider } from "./context";
 
 ReactDOM.render(
   <AppProvider>
-    <Web3ReactProvider getLibrary={getLibrary}>
+    <Web3ReactProvider
+      connectors={[
+        [injected, injectedHooks],
+        [walletconnect, walletconnectHooks],
+      ]}
+    >
       <Header />
       <App />
       <Footer />

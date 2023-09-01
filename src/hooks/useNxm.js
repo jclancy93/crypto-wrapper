@@ -2,10 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { ethers } from "ethers";
 import { useNxmContract } from "./useContract";
 import { useActiveWeb3React } from "./index";
-import {
-  NETWORK_WNXM_CONTRACT_ADDRESS,
-  NXM_TOKEN_DECIMALS,
-} from "../constants";
+import { NETWORK_WNXM_CONTRACT_ADDRESS } from "../constants";
 import { useMaxApproval } from "./../context";
 
 const { BigNumber } = ethers;
@@ -40,6 +37,7 @@ export const useNxm = () => {
           parsedAllowance: ethers.utils.formatEther(allowance),
         });
       } catch (err) {
+        console.log(err);
         setAllowance({
           rawAllowance: BigNumber.from(0),
           parsedAllowance: 0,
@@ -54,6 +52,7 @@ export const useNxm = () => {
         const whitelisted = await nxmContract.whiteListed(account);
         setWhitelisted(whitelisted);
       } catch (err) {
+        console.log(err);
         setWhitelisted(false);
       }
     }
@@ -69,6 +68,7 @@ export const useNxm = () => {
           displayBalance: (+ethers.utils.formatUnits(balance)).toFixed(6),
         });
       } catch (err) {
+        console.log(err, "here");
         setBalance({
           rawBalance: 0,
           parsedBalance: 0.0,

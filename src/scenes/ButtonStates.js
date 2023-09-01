@@ -14,7 +14,7 @@ export const ButtonStates = ({
   setCurrentStep,
   setModalOpen,
 }) => {
-  const { active } = useWeb3React();
+  const { account } = useWeb3React();
   const {
     isWhitelisted,
     approve: approveNxm,
@@ -26,7 +26,6 @@ export const ButtonStates = ({
     unwrap,
     approve: approveWnxm,
     balance: wNxmBalance,
-    allowance: wNxmAllowance,
   } = useWnxm();
   const [isLoadingApproval, setLoadingApproval] = useState(false);
   const [isLoadingWrap, setLoadingWrap] = useState(false);
@@ -34,7 +33,7 @@ export const ButtonStates = ({
     state: { maxApproval },
   } = useMaxApproval();
 
-  if (!active) {
+  if (!account) {
     return (
       <Button
         variant="primary"

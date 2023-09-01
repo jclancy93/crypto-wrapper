@@ -1,9 +1,10 @@
-import classnames from "classnames"
+import classnames from "classnames";
 
-const baseClassNames = "relative shadow-sm bg-gray-700 text-gray-300 px-2 py-3 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-xl text-xl border-gray-300 rounded-md z-0"
+const baseClassNames =
+  "relative shadow-sm bg-gray-700 text-gray-300 px-2 py-3 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-xl text-xl border-gray-300 rounded-md z-0";
 
-export const Input = ({ 
-  name, 
+export const Input = ({
+  name,
   label,
   disabled,
   value,
@@ -21,15 +22,15 @@ export const Input = ({
         {label}
       </label>
       <div className="mt-1 relative">
-        <input 
-          type={type} 
+        <input
+          type={type}
           name={name}
           disabled={disabled}
-          id={name} 
+          id={name}
           value={value}
           min="0"
           className={classnames(baseClassNames, {
-            'cursor-not-allowed': disabled,
+            "cursor-not-allowed": disabled,
           })}
           placeholder={placeholder}
           onChange={onChange}
@@ -38,5 +39,5 @@ export const Input = ({
       </div>
       <p className="mt-2 text-sm text-red-600">{error}</p>
     </div>
-  )
-}
+  );
+};

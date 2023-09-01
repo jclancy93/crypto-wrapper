@@ -9,12 +9,9 @@ export * from "./Input";
 export * from "./Steps";
 export * from "./Web3Modal";
 
-export const Body = styled.body`
-`;
+export const Body = styled.body``;
 
-export const Image = ({ ...props }) => (
-  <img { ...props } />
-)
+export const Image = ({ ...props }) => <img {...props} />;
 
 export const Link = styled.a.attrs({
   target: "_blank",
